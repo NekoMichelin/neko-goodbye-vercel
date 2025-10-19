@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nekø Michelin — Goodbye</title>
+  <meta name="description" content="3s intro → apre l'app SoundCloud se installata, fallback automatico." />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <style>
+    html, body { margin:0; padding:0; height:100%; background:#000; }
+    video { width:100vw; height:100vh; object-fit:cover; display:block; }
+  </style>
+</head>
+<body>
+  <video id="intro" src="/public/loading.mp4" autoplay muted playsinline loop preload="auto"></video>
+  <script>
+    (function() {
+      var src = new URLSearchParams(location.search).get('src') || '';
+      try { navigator.sendBeacon('/api/ping?src=' + encodeURIComponent(src)); } catch(e) { }
+      setTimeout(function() {
+        try { window.top.location.href = '/api/deeplink?src=' + encodeURIComponent(src); }
+        catch(e) { location.href = '/api/deeplink?src=' + encodeURIComponent(src); }
+      }, 3000);
+      setTimeout(function() {
+        try { window.top.location.href = 'https://ffm.to/goodbye-nekomichelin'; }
+        catch(e) { location.href = 'https://ffm.to/goodbye-nekomichelin'; }
+      }, 6000);
+    })();
+  </script>
+</body>
+</html>
